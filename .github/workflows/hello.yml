@@ -11,3 +11,7 @@ jobs:
     steps:
       - name: say hello
         run: echo "Hello, world!"
+      - name: print current date
+        run: echo "Current date is: $(date)"
+      - name: print working directory
+        run: echo "Current working directory contains: $(ls -l)"
