@@ -48,7 +48,7 @@ jobs:
   #       env:
   #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   #         DEFAULT_BUMP: 'patch'
-  # remove later 
+  # remove later  
   a_test_job:
     runs-on: ubuntu-24.04
     steps:
@@ -56,4 +56,5 @@ jobs:
       - name: commits
         env:
           COMMITS: ${{ toJson(github.event.commits.*.message) }}
-        run: echo "${{ contains(join(github.event.commits.*.message, ', '), '#skip') }}"
+        # run: echo "${{ contains(join(github.event.commits.*.message, ', '), '#skip') }}"
+        run: echo "${{ join(github.event.commits.*.message, ', ') }}"
