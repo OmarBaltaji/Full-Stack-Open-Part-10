@@ -55,5 +55,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: commits
         env:
-          COMMITS: ${{ join(github.event.commits.*.message) }}
-        run: echo "${{ contains($COMMITS, '#skip') }}"
+          SHOULD_SKIP: ${{ contains(join(github.event.commits.*.message), '#skip') }}
+        run: echo "$SHOULD_SKIP"
