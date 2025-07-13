@@ -10,7 +10,7 @@ on:
 
 env:
   SHOULD_SKIP: ${{ contains(join(github.event.commits.*.message), '#skip') }}
-  COMMITS: ${{ join(github.event.commits.*.message) }}
+  COMMITS: ${{ toJson(github.event.commits) }}
 
 jobs:
   simple_deployment_pipeline:
