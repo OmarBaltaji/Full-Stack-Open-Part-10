@@ -9,50 +9,50 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  simple_deployment_pipeline:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Install dependencies
-        run: npm install
-      - name: Run linting
-        run: npm run eslint
-      - name: Run tests
-        run: npm run test
-      - name: Build the application
-        run: npm run build
-      - name: Run end-to-end tests
-        uses: cypress-io/github-action@v5
-        with:
-          command: npm run test:e2e
-          start: npm run start-prod
-          wait-on: 'http://localhost:5000'
-      - name: Deploy
-        if: github.ref == 'refs/heads/main'
-        env:
-          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-        run: curl "$deploy_url"
-  tag_release:
-    needs: [simple_deployment_pipeline]
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: '0'
-      - name: Bump version and push tag
-        if: github.ref == 'refs/heads/main'
-        uses: anothrNick/github-tag-action@1.73.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: 'patch'
+  # simple_deployment_pipeline:
+  #   runs-on: ubuntu-24.04
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '22'
+  #     - name: Install dependencies
+  #       run: npm install
+  #     - name: Run linting
+  #       run: npm run eslint
+  #     - name: Run tests
+  #       run: npm run test
+  #     - name: Build the application
+  #       run: npm run build
+  #     - name: Run end-to-end tests
+  #       uses: cypress-io/github-action@v5
+  #       with:
+  #         command: npm run test:e2e
+  #         start: npm run start-prod
+  #         wait-on: 'http://localhost:5000'
+  #     - name: Deploy
+  #       if: github.ref == 'refs/heads/main'
+  #       env:
+  #         deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+  #       run: curl "$deploy_url"
+  # tag_release:
+  #   needs: [simple_deployment_pipeline]
+  #   runs-on: ubuntu-24.04
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: '0'
+  #     - name: Bump version and push tag
+  #       if: github.ref == 'refs/heads/main'
+  #       uses: anothrNick/github-tag-action@1.73.0
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         DEFAULT_BUMP: 'patch'
   a_test_job:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: commits
         env:
-          COMMITS: ${{ toJson(github.event.commits) }}
+          COMMITS: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMITS"
