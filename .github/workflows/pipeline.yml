@@ -55,6 +55,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: commits
         env:
-          COMMITS: ${{ toJson(github.event.commits.*.message) }}
-        # run: echo "${{ contains(join(github.event.commits.*.message, ', '), '#skip') }}"
-        run: echo "${{ join(github.event.commits.*.message, ', ') }}"
+          COMMITS: ${{ join(github.event.commits.*.message) }}
+        run: echo "${{ contains($COMMITS, '#skip') }}"
