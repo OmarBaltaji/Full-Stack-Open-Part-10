@@ -10,6 +10,7 @@ on:
 
 env:
   SHOULD_SKIP: ${{ contains(join(github.event.commits.*.message), '#skip') }}
+  COMMITS: ${{ join(github.event.commits.*.message) }}
 
 jobs:
   simple_deployment_pipeline:
@@ -17,8 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Print envs
-        run:
+        run: |
           echo "${{ env.SHOULD_SKIP }}"
+          echo "${{ env.COMMITS }}"
   #     - uses: actions/setup-node@v4
   #       with:
   #         node-version: '22'
