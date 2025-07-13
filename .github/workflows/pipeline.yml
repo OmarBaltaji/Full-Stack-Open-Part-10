@@ -55,5 +55,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: commits
         env:
-          COMMITS: ${{ join(toJson(github.event.commits.*.message), ' ') }}
-        run: echo "$COMMITS"
+          COMMITS: ${{ toJson(github.event.commits.*.message }}
+        run: echo "${{ join($COMMITS, ' ') }}"
