@@ -30,6 +30,8 @@ jobs:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: 'http://localhost:5000'
+      - name: REF
+        run: echo github.ref
       - name: Deploy
         if: github.ref == 'refs/heads/main'
         env:
