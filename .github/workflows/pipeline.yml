@@ -34,7 +34,7 @@ jobs:
           start: npm run start-prod
           wait-on: 'http://localhost:5000'
       - name: Deploy
-        if: ${{ github.ref == 'refs/heads/main' && SHOULD_SKIP }}
+        if: ${{ github.ref == 'refs/heads/main' && env.SHOULD_SKIP == 'false' }}
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: curl "$deploy_url"
@@ -46,7 +46,7 @@ jobs:
         with:
           fetch-depth: '0'
       - name: Bump version and push tag
-        if: ${{ github.ref == 'refs/heads/main' && SHOULD_SKIP }}
+        if: ${{ github.ref == 'refs/heads/main' && env.SHOULD_SKIP == 'false' }}
         uses: anothrNick/github-tag-action@1.73.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
