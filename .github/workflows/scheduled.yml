@@ -4,11 +4,6 @@ on:
   schedule:
     - cron: '0 15 * * *'
 
-on:
-  push:
-    branches:
-      - dev
-
 jobs:
   periodic_health_check:
     runs-on: ubuntu-24.04
