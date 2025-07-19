@@ -18,6 +18,6 @@ jobs:
         with:
           url: https://full-stack-open-part-10.onrender.com/health
           follow-redirect: false 
-          max-attempts: 3
+          max-attempts: 1
           retry-delay: 5s
           retry-all: false
