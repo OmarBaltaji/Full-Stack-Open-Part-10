@@ -44,7 +44,9 @@ jobs:
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           severity: info
-          details: A new version of Pokedex deployed
+          username: Github
+          title: A new version of Pokedex deployed
+          description: to ${{ env.RENDER_URL }} by ${{ github.actor }}
       - name: Discord Failure Notification
         if: failure()
         uses: rjstone/discord-webhook-notify@v2
@@ -68,19 +70,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: 'patch'
-      - name: Discord Success Notification
-        if: success()
-        uses: rjstone/discord-webhook-notify@v2
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: info
-          details: A new version of Pokedex deployed
- 
-      - name: Discord Failure Notification
-        if: failure()
-        uses: rjstone/discord-webhook-notify@v2
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: error
-          details: Build Failed
  
