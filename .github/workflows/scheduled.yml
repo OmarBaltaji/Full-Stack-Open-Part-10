@@ -1,4 +1,4 @@
-name: Scheduled Health Check
+name: Scheduled Jobs executed daily at 8am
 
 # on:
 #   schedule:
@@ -9,12 +9,15 @@ on:
     branches:
       - dev
 
-steps:
-  - name: Check the deployed service URL
-    uses: jtalk/url-health-check-action@b716ccb6645355dd9fcce8002ce460e5474f7f00
-    with:
-      url: https://full-stack-open-part-10.onrender.com/health
-      follow-redirect: false 
-      max-attempts: 3
-      retry-delay: 5s
-      retry-all: false
+jobs:
+  Periodic health check:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check the deployed service URL
+        uses: jtalk/url-health-check-action@b716ccb6645355dd9fcce8002ce460e5474f7f00
+        with:
+          url: https://full-stack-open-part-10.onrender.com/health
+          follow-redirect: false 
+          max-attempts: 3
+          retry-delay: 5s
+          retry-all: false
