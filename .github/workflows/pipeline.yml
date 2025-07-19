@@ -47,8 +47,6 @@ jobs:
           details: A new version of Pokedex deployed
       - name: Discord Failure Notification
         if: failure()
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: rjstone/discord-webhook-notify@c2597273488aeda841dd1e891321952b51f7996f
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
@@ -70,7 +68,7 @@ jobs:
           DEFAULT_BUMP: 'patch'
       - name: Discord Success Notification
         if: success()
-        uses: rjstone/discord-webhook-notify@c2597273488aeda841dd1e891321952b51f7996f
+        uses: rjstone/discord-webhook-notify@v2
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           severity: info
@@ -80,7 +78,7 @@ jobs:
         if: failure()
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: rjstone/discord-webhook-notify@c2597273488aeda841dd1e891321952b51f7996f
+        uses: rjstone/discord-webhook-notify@v2
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           severity: error
