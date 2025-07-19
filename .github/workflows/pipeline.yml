@@ -51,8 +51,9 @@ jobs:
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           severity: error
+          username: Github
           title: Build Failed
-          details: commit ${{ GITHUB_SHA }} by ${{ github.actor }} broke the build
+          description: commit ${{ github.sha }} by ${{ github.actor }} broke the build
  
   tag_release:
     needs: [simple_deployment_pipeline]
