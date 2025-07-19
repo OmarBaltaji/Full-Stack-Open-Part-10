@@ -53,7 +53,7 @@ jobs:
           severity: error
           username: Github
           title: Build Failed
-          description: commit ${{ github.sha }} by ${{ github.actor }} broke the build
+          description: commit [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) by ${{ github.actor }} broke the build
  
   tag_release:
     needs: [simple_deployment_pipeline]
