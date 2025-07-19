@@ -2,7 +2,7 @@ name: Scheduled Jobs executed daily at 3pm
 
 on:
   schedule:
-    - cron: '5 15 * * *'
+    - cron: '10 15 * * *'
 
 jobs:
   periodic_health_check:
