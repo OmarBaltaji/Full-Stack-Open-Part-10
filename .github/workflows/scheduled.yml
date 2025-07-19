@@ -1,0 +1,18 @@
+name: Scheduled Jobs executed daily at 3pm
+
+on:
+  schedule:
+    - cron: '5 15 * * *'
+
+jobs:
+  periodic_health_check:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check the deployed service URL
+        uses: jtalk/url-health-check-action@b716ccb6645355dd9fcce8002ce460e5474f7f00
+        with:
+          url: https://full-stack-open-part-10.onrender.com/health
+          follow-redirect: false 
+          max-attempts: 1
+          retry-delay: 5s
+          retry-all: false

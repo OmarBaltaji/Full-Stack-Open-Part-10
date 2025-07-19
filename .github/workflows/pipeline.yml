@@ -38,6 +38,25 @@ jobs:
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: curl "$deploy_url"
+      - name: Discord Success Notification
+        if: success()
+        uses: rjstone/discord-webhook-notify@c2597273488aeda841dd1e891321952b51f7996f
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: info
+          username: Github
+          title: A new version of Pokedex deployed
+          description: to ${{ vars.RENDER_URL }} by ${{ github.actor }}
+      - name: Discord Failure Notification
+        if: failure()
+        uses: rjstone/discord-webhook-notify@c2597273488aeda841dd1e891321952b51f7996f
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: error
+          username: Github
+          title: Build Failed
+          description: commit [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) by ${{ github.actor }} broke the build
+ 
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-24.04
@@ -47,7 +66,8 @@ jobs:
           fetch-depth: '0'
       - name: Bump version and push tag
         if: ${{ github.ref == 'refs/heads/main' && env.SHOULD_SKIP == 'false' }}
-        uses: anothrNick/github-tag-action@1.73.0
+        uses: anothrNick/github-tag-action@e528bc2b9628971ce0e6f823f3052d1dcd9d512c
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: 'patch'
+ 
